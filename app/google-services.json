@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "518687864753",
+    "project_id": "datvetaumobileapp",
+    "storage_bucket": "datvetaumobileapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:518687864753:android:93dc6704cbf2a074a32f90",
+        "android_client_info": {
+          "package_name": "com.tvc.datvetaumobileapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "518687864753-mnk4h0m2h53hgtbcddbn1kbt8q5aiukp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByH_3UuIbzk5eM2DDRvyaCuRENFB5XdU4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "518687864753-mnk4h0m2h53hgtbcddbn1kbt8q5aiukp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
