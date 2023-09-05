@@ -20,9 +20,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 import Service.*;
@@ -151,6 +154,13 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     });
                     if(task.isSuccessful()){
+                        FirebaseUser mUser = firebaseAuth.getCurrentUser();
+                        User user = new User(mUser.getUid(), name,
+                                1, dateOfBirth);
+                        //Tạo thông tin tài khoản cho user trên realtime database
+                        DatabaseReference databaseReference = database.getReference("Users");
+                        databaseReference.child(mUser.getUid()).setValue(user);
+
                         builder.setMessage("Đăng ký tài khoản thành công");
                         alertDialog = builder.create();
                         alertDialog.show();

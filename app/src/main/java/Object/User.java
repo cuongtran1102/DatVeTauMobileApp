@@ -4,19 +4,19 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class User {
-    private String userUID, name;
+    private String userUID, name, dateOfBirth;
     private int userRole;
-    private LocalDate dateOFBirth;
     private List<Ticket> ticketList;
 
     public User() {
     }
 
-    public User(String userUID, String name, int userRole, LocalDate dateOFBirth) {
+    public User(String userUID, String name, int userRole, String dateOfBirth) {
         this.userUID = userUID;
         this.name = name;
         this.userRole = userRole;
-        this.dateOFBirth = dateOFBirth;
+        this.dateOfBirth = dateOfBirth;
+
     }
 
     public String getUserUID() {
@@ -43,12 +43,12 @@ public class User {
         this.userRole = userRole;
     }
 
-    public LocalDate getDateOFBirth() {
-        return dateOFBirth;
+    public String getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setDateOFBirth(LocalDate dateOFBirth) {
-        this.dateOFBirth = dateOFBirth;
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public List<Ticket> getTicketList() {

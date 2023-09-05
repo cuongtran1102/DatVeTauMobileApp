@@ -9,10 +9,13 @@ import android.view.View;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     private Button btnLogout;
     private FirebaseAuth firebaseAuth;
+    private FirebaseDatabase database;
     private Context context = this;
 
     @Override
@@ -30,9 +33,13 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+
     }
     private void init(){
         btnLogout = findViewById(R.id.btnLogout);
         firebaseAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
     }
+
 }

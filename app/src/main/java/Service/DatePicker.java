@@ -32,7 +32,7 @@ public class DatePicker {
                         selectedDate.set(year, month, dayOfMonth);
 
 
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
                         String selectedDateString = sdf.format(selectedDate.getTime());
                         etSelectedDate.setText(selectedDateString);
                     }
