@@ -43,4 +43,31 @@ public class DatePicker {
 
         datePickerDialog.show();
     }
+
+    public void showDatePickerDialogForFuture() {
+        // Lấy ngày hiện tại
+        Calendar currentDate = Calendar.getInstance();
+
+        // Tính toán ngày tối thiểu cho DatePickerDialog (ngày hiện tại + 2 ngày)
+        currentDate.add(Calendar.DAY_OF_MONTH, 2);
+
+        int year = currentDate.get(Calendar.YEAR);
+        int month = currentDate.get(Calendar.MONTH);
+        int day = currentDate.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(context,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(android.widget.DatePicker view, int year, int month, int dayOfMonth) {
+                        selectedDate.set(year, month, dayOfMonth);
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+                        String selectedDateString = sdf.format(selectedDate.getTime());
+                        etSelectedDate.setText(selectedDateString);
+                    }
+                }, year, month, day);
+
+        datePickerDialog.getDatePicker().setMinDate(currentDate.getTimeInMillis()); // Đặt ngày tối thiểu cho DatePickerDialog
+        datePickerDialog.show();
+    }
+
 }

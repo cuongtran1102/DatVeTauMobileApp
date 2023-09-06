@@ -2,6 +2,7 @@ package com.tvc.datvetaumobileapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -10,10 +11,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+
 import Fragment.*;
 
 public class AdminActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -24,6 +30,10 @@ public class AdminActivity extends AppCompatActivity implements NavigationView.O
     private int currentFragment;
     private Context context = this;
     private NavigationView navigationView;
+    private FirebaseDatabase database;
+    private FirebaseAuth firebaseAuth;
+    private AlertDialog.Builder builder;
+    private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +45,12 @@ public class AdminActivity extends AppCompatActivity implements NavigationView.O
         navigationView.getMenu().findItem(R.id.nav_quan_ly_chuyen_tau).setChecked(true);
     }
     private void init(){
+        database = FirebaseDatabase.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        builder = new AlertDialog.Builder(context);
+        builder.setTitle("Thông báo");
+
         drawerLayout = findViewById(R.id.drawerLayout);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -80,7 +96,19 @@ public class AdminActivity extends AppCompatActivity implements NavigationView.O
             }
         }
         else{
-
+            builder.setMessage("Bạn có muốn đăng xuất");
+            builder.setPositiveButton("Cancel", null);
+            builder.setNegativeButton("Đăng xuất", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    firebaseAuth.signOut();
+                    Intent intent = new Intent(AdminActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+            alertDialog = builder.create();
+            alertDialog.show();
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

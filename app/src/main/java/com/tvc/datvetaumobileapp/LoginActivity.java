@@ -19,11 +19,19 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import Object.*;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText etEmail, etPassword;
-    private Button btnLogin;
+    private Button btnLogin, btnLoginAdmin;
     private TextView txtRegister;
+    private FirebaseDatabase database;
     private FirebaseAuth firebaseAuth;
     private Context context = this;
     private AlertDialog.Builder builder;
@@ -49,16 +57,26 @@ public class LoginActivity extends AppCompatActivity {
                 loginUser();
             }
         });
+        btnLoginAdmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginAdmin();
+            }
+        });
     }
 
     private void init(){
+        database = FirebaseDatabase.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         etEmail = findViewById(R.id.etEmail_Login);
         etPassword = findViewById(R.id.etPassword_Login);
         btnLogin = findViewById(R.id.btnLogin);
+        btnLoginAdmin = findViewById(R.id.btnLoginAdmin);
         txtRegister = findViewById(R.id.txtRegister);
         progressDialog = new ProgressDialog(context);
         builder = new AlertDialog.Builder(context);
+        builder.setTitle("Thông báo");
+        builder.setPositiveButton("OK", null);
     }
     private void loginUser(){
         String email = etEmail.getText().toString().trim();
@@ -75,18 +93,32 @@ public class LoginActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     progressDialog.dismiss();
                     if(task.isSuccessful()){
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finishAffinity();
-                    }
-                    else{
-                        builder.setTitle("Thông báo");
-                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        FirebaseUser mUser = firebaseAuth.getCurrentUser();
+                        DatabaseReference databaseReference = database.getReference("Users").
+                                child(mUser.getUid());
+                        databaseReference.addValueEventListener(new ValueEventListener() {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                User user = snapshot.getValue(User.class);
+                                if(user.getUserRole() == 1){
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finishAffinity();
+                                }
+                                else {
+                                    builder.setMessage("Tài khoản của bạn không phải tài khoản User");
+                                    alertDialog = builder.create();
+                                    alertDialog.show();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
                             }
                         });
+                    }
+                    else{
                         String error = task.getException().getMessage().toString();
                         builder.setTitle(error);
                         alertDialog = builder.create();
@@ -94,6 +126,57 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
             });
+        }
+    }
+
+    private void loginAdmin(){
+        String email = etEmail.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
+        if(email.isEmpty() || password.isEmpty()){
+            Toast.makeText(context, "Hãy nhập email và mật khẩu để đăng nhập",
+                    Toast.LENGTH_SHORT).show();
+        }
+        else {
+            progressDialog.show();
+            firebaseAuth.signInWithEmailAndPassword(email, password).
+                    addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressDialog.dismiss();
+                            if(task.isSuccessful()){
+                                FirebaseUser mUser = firebaseAuth.getCurrentUser();
+                                DatabaseReference databaseReference = database.getReference("Users").
+                                        child(mUser.getUid());
+                                databaseReference.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        User user = snapshot.getValue(User.class);
+                                        if(user.getUserRole() == 0){
+                                            Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
+                                            startActivity(intent);
+                                            finishAffinity();
+                                        }
+                                        else {
+                                            builder.setMessage("Tài khoản của bạn không phải tài khoản Admin");
+                                            alertDialog = builder.create();
+                                            alertDialog.show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                            }
+                            else{
+                                String error = task.getException().getMessage().toString();
+                                builder.setTitle(error);
+                                alertDialog = builder.create();
+                                alertDialog.show();
+                            }
+                        }
+                    });
         }
     }
 }
