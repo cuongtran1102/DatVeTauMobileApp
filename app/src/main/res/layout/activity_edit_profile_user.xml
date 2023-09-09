@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#53C4E6"
+    tools:context=".EditProfileUserActivity">
+
+    <EditText
+        android:id="@+id/etNgaySinh_ProfileDetails"
+        android:layout_width="260dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="5dp"
+        android:ems="10"
+        android:inputType="none"
+        android:clickable="true"
+        android:focusable="false"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etName_ProfileDetails" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="67dp"
+        android:layout_marginEnd="9dp"
+        android:text="Ngày sinh:"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/etNgaySinh_ProfileDetails"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <ImageButton
+        android:id="@+id/btnBack_ProfileDetail"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_back" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="93dp"
+        android:text="Thông tin tài khoản"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="149dp"
+        android:text="Tài khoản:"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <EditText
+        android:id="@+id/etName_ProfileDetails"
+        android:layout_width="260dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="133dp"
+        android:layout_marginEnd="5dp"
+        android:ems="10"
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <Button
+        android:id="@+id/btnUpdate_ProfileDetail"
+        android:layout_width="332dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="105dp"
+        android:layout_marginEnd="31dp"
+        android:backgroundTint="#AC8E8E"
+        android:text="Cập nhật"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etNgaySinh_ProfileDetails" />
+</androidx.constraintlayout.widget.ConstraintLayout>

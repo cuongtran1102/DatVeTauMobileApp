@@ -41,6 +41,7 @@ public class SplashActivity extends AppCompatActivity {
         if (mUser == null){
             Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
             startActivity(intent);
+            finishAffinity();
         }
         else{
             DatabaseReference databaseReference = database.getReference("Users").child(mUser.getUid());
@@ -51,10 +52,12 @@ public class SplashActivity extends AppCompatActivity {
                     if (user.getUserRole() == 0){
                         Intent intent = new Intent(SplashActivity.this, AdminActivity.class);
                         startActivity(intent);
+                        finishAffinity();
                     }
                     else {
                         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                         startActivity(intent);
+                        finishAffinity();
                     }
                 }
 
