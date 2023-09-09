@@ -19,7 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import Fragment.*;
 
 public class MainActivity extends AppCompatActivity {
-    private Button btnLogout;
     private FrameLayout frameLayoutUser;
     private TabLayout tabLayoutUser;
     private FirebaseAuth firebaseAuth;
@@ -59,16 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-//        btnLogout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                firebaseAuth.signOut();
-//                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
-
     }
     private void init(){
         firebaseAuth = FirebaseAuth.getInstance();
