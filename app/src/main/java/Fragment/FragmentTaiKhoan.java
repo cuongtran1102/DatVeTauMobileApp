@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tvc.datvetaumobileapp.EditPasswordActivity;
 import com.tvc.datvetaumobileapp.EditProfileUserActivity;
 import com.tvc.datvetaumobileapp.LoginActivity;
 import com.tvc.datvetaumobileapp.R;
@@ -62,6 +63,13 @@ public class FragmentTaiKhoan extends Fragment {
 
             }
         });
+        layoutEditPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), EditPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return rootView;
     }
@@ -74,7 +82,7 @@ public class FragmentTaiKhoan extends Fragment {
         txtName = rootView.findViewById(R.id.txtName_ProfileUser);
         txtEmail = rootView.findViewById(R.id.txtEmail_ProfileUser);
         layoutEditProfile = rootView.findViewById(R.id.layout_EditProfile);
-        layoutEditPassword = rootView.findViewById(R.id.layout_EditUser);
+        layoutEditPassword = rootView.findViewById(R.id.layout_EditPassword);
         layoutLogout = rootView.findViewById(R.id.layout_LogoutUser);
 
         builder = new AlertDialog.Builder(getContext());
