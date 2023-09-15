@@ -24,8 +24,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 import Service.*;
@@ -41,7 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
     private AlertDialog alertDialog;
     private FirebaseDatabase database;
     private Calendar calendar;
-    private DatePicker datePicker;
+    private ShowDatePicker showDatePicker;
     private ProgressDialog progressDialog;
 
 
@@ -60,7 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
         etDateOfBirth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                datePicker.showDatePickerDialog();
+                showDatePicker.showDatePickerDialog();
             }
         });
         etPassword.addTextChangedListener(new TextWatcher() {
@@ -123,7 +121,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
         btnBack = findViewById(R.id.btnBack_Register);
         calendar = Calendar.getInstance();
-        datePicker = new DatePicker(context, calendar, etDateOfBirth);
+        showDatePicker = new ShowDatePicker(context, calendar, etDateOfBirth);
     }
     private void registerUser(){
         String email = etEmail.getText().toString().trim();
@@ -157,7 +155,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if(task.isSuccessful()){
                         FirebaseUser mUser = firebaseAuth.getCurrentUser();
                         User user = new User(mUser.getUid(), name,
-                                1, dateOfBirth);
+                                1, dateOfBirth, mUser.getEmail());
                         //Tạo thông tin tài khoản cho user trên realtime database
                         DatabaseReference databaseReference = database.getReference("Users");
                         databaseReference.child(mUser.getUid()).setValue(user);

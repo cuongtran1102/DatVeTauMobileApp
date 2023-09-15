@@ -32,7 +32,7 @@ import Object.*;
 public class LoginActivity extends AppCompatActivity {
     private EditText etEmail, etPassword;
     private Button btnLogin, btnLoginAdmin;
-    private TextView txtRegister;
+    private TextView txtRegister, txtForgotPassword;
     private FirebaseDatabase database;
     private FirebaseAuth firebaseAuth;
     private Context context = this;
@@ -50,6 +50,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+        txtForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, ResetPasswordActivity.class);
                 startActivity(intent);
             }
         });
@@ -95,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         btnLoginAdmin = findViewById(R.id.btnLoginAdmin);
         txtRegister = findViewById(R.id.txtRegister);
+        txtForgotPassword = findViewById(R.id.txtForgotPassword);
         progressDialog = new ProgressDialog(context);
         builder = new AlertDialog.Builder(context);
         builder.setTitle("Thông báo");

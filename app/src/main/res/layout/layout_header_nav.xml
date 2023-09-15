@@ -9,7 +9,7 @@
         android:layout_height="80dp"
         android:src="@drawable/avatar" />
     <TextView
-        android:id="@+id/txtEmailAdmin"
+        android:id="@+id/txtNameAdmin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Email"
@@ -19,7 +19,7 @@
         android:paddingLeft="10dp"
         />
     <TextView
-        android:id="@+id/txtNameAdmin"
+        android:id="@+id/txtEmailAdmin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Name"

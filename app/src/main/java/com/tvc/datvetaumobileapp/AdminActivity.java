@@ -15,12 +15,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import Fragment.*;
+import Object.*;
 
 public class AdminActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
@@ -32,8 +39,10 @@ public class AdminActivity extends AppCompatActivity implements NavigationView.O
     private NavigationView navigationView;
     private FirebaseDatabase database;
     private FirebaseAuth firebaseAuth;
+    private FirebaseUser mUser;
     private AlertDialog.Builder builder;
     private AlertDialog alertDialog;
+    private TextView txtNameAdmin, txtEmailAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +52,14 @@ public class AdminActivity extends AppCompatActivity implements NavigationView.O
 
         replaceFragment(new FragmentQuanLyChuyenTau());
         navigationView.getMenu().findItem(R.id.nav_quan_ly_chuyen_tau).setChecked(true);
+
+        getInforUser();
     }
     private void init(){
         database = FirebaseDatabase.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
+
+        mUser = firebaseAuth.getCurrentUser();
 
         builder = new AlertDialog.Builder(context);
         builder.setTitle("Thông báo");
@@ -60,6 +73,29 @@ public class AdminActivity extends AppCompatActivity implements NavigationView.O
         toggle.syncState();
         navigationView = findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(this);
+
+        txtNameAdmin = navigationView.getHeaderView(0).findViewById(R.id.txtNameAdmin);
+        txtEmailAdmin = navigationView.getHeaderView(0).findViewById(R.id.txtEmailAdmin);
+    }
+    public void getInforUser(){
+        DatabaseReference databaseReference = database.getReference("Users").
+                child(mUser.getUid());
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                if(user != null){
+                    txtNameAdmin.setText(user.getName());
+                    txtEmailAdmin.setText(mUser.getEmail());
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override
