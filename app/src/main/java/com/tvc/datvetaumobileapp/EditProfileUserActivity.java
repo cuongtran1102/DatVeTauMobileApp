@@ -5,7 +5,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +24,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import Service.DatePicker;
+import Service.ShowDatePicker;
 import Object.*;
 
 public class EditProfileUserActivity extends AppCompatActivity {
@@ -36,7 +35,7 @@ public class EditProfileUserActivity extends AppCompatActivity {
     private Button btnUpdate;
     private EditText etName, etBirtOfDate;
     private Context context = this;
-    private DatePicker datePicker;
+    private ShowDatePicker showDatePicker;
     private Calendar calendar;
 
     @Override
@@ -50,7 +49,7 @@ public class EditProfileUserActivity extends AppCompatActivity {
         etBirtOfDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                datePicker.showDatePickerDialog();
+                showDatePicker.showDatePickerDialog();
             }
         });
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +61,7 @@ public class EditProfileUserActivity extends AppCompatActivity {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = etName.getText().toString();
+                String name = etName.getText().toString().trim();
                 String ngaySinh = etBirtOfDate.getText().toString();
                 if(name.isEmpty() || ngaySinh.isEmpty()){
                     Toast.makeText(context, "Hãy nhập đủ thông tin cần cập nhật", Toast.LENGTH_SHORT).show();
@@ -84,7 +83,7 @@ public class EditProfileUserActivity extends AppCompatActivity {
         etName = findViewById(R.id.etName_ProfileDetails);
         etBirtOfDate = findViewById(R.id.etNgaySinh_ProfileDetails);
         calendar = Calendar.getInstance();
-        datePicker = new DatePicker(context, calendar, etBirtOfDate);
+        showDatePicker = new ShowDatePicker(context, calendar, etBirtOfDate);
     }
     private void loadProfileUser(){
         DatabaseReference databaseReference = database.getReference("Users").

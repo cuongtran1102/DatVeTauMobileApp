@@ -1,7 +1,5 @@
 package Fragment;
 
-import static android.app.Activity.RESULT_OK;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,9 +24,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.tvc.datvetaumobileapp.EditPasswordActivity;
 import com.tvc.datvetaumobileapp.EditProfileUserActivity;
 import com.tvc.datvetaumobileapp.LoginActivity;
+import com.tvc.datvetaumobileapp.MainActivity;
 import com.tvc.datvetaumobileapp.R;
 
-import Object.*;
+import Object.User;
 
 public class FragmentTaiKhoan extends Fragment {
     private FirebaseAuth firebaseAuth;

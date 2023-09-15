@@ -8,12 +8,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class DatePicker {
+public class ShowDatePicker {
     private Context context;
     private Calendar selectedDate;
     private EditText etSelectedDate;
 
-    public DatePicker(Context context, Calendar selectedDate, EditText etSelectedDate) {
+    public ShowDatePicker(Context context, Calendar selectedDate, EditText etSelectedDate) {
         this.context = context;
         this.selectedDate = selectedDate;
         this.etSelectedDate = etSelectedDate;
