@@ -37,7 +37,7 @@ public class FragmentEditProfile extends Fragment {
     private FirebaseUser mUser;
     private User user;
     private View rootView;
-    private EditText etName, etNgaySinh;
+    private EditText etName, etNgaySinh, etEmail;
     private TextView txtChangePassword;
     private Button btnUpdateProfile;
     @Nullable
@@ -85,6 +85,7 @@ public class FragmentEditProfile extends Fragment {
         mUser = firebaseAuth.getCurrentUser();
 
         etName = rootView.findViewById(R.id.etName_EditProfileAdmin);
+        etEmail = rootView.findViewById(R.id.etEmail_EditProfileAdmin);
         etNgaySinh = rootView.findViewById(R.id.etNgaySinh_EditProfileAdmin);
         btnUpdateProfile = rootView.findViewById(R.id.btnUpdateProfileAdmin);
         txtChangePassword = rootView.findViewById(R.id.txtChangePasswordAdmin);
@@ -99,6 +100,7 @@ public class FragmentEditProfile extends Fragment {
                 if(user != null){
                     etName.setText(user.getName());
                     etNgaySinh.setText(user.getDateOfBirth());
+                    etEmail.setText(user.getEmail());
                 }
             }
 
