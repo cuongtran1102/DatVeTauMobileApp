@@ -55,7 +55,7 @@
         android:id="@+id/layout_EditProfile"
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:background="#83C9DD"
+        android:background="@drawable/bg_menu_user"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_EditUser">
 
@@ -98,7 +98,7 @@
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_marginTop="1dp"
-        android:background="#83C9DD"
+        android:background="@drawable/bg_menu_user"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_EditProfile">
 
@@ -140,7 +140,7 @@
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_marginTop="1dp"
-        android:background="#83C9DD"
+        android:background="@drawable/bg_menu_user"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_EditPassword">
 

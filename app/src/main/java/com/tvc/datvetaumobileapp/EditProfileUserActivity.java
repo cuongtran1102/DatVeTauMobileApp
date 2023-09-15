@@ -33,7 +33,7 @@ public class EditProfileUserActivity extends AppCompatActivity {
     private FirebaseUser mUser;
     private ImageButton btnBack;
     private Button btnUpdate;
-    private EditText etName, etBirtOfDate;
+    private EditText etName, etBirtOfDate, etEmail;
     private Context context = this;
     private ShowDatePicker showDatePicker;
     private Calendar calendar;
@@ -81,6 +81,7 @@ public class EditProfileUserActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btnBack_ProfileDetail);
         btnUpdate = findViewById(R.id.btnUpdate_ProfileDetail);
         etName = findViewById(R.id.etName_ProfileDetails);
+        etEmail = findViewById(R.id.etEmail_ProfileDetail);
         etBirtOfDate = findViewById(R.id.etNgaySinh_ProfileDetails);
         calendar = Calendar.getInstance();
         showDatePicker = new ShowDatePicker(context, calendar, etBirtOfDate);
@@ -94,6 +95,7 @@ public class EditProfileUserActivity extends AppCompatActivity {
                 User user = snapshot.getValue(User.class);
                 etName.setText(user.getName());
                 etBirtOfDate.setText(user.getDateOfBirth());
+                etEmail.setText(user.getEmail());
             }
 
             @Override
