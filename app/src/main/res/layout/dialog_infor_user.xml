@@ -50,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <ImageButton
-        android:id="@+id/btnClose_DialogInforUser"
+        android:id="@+id/btnClose_DialogThemGaTau"
         android:layout_width="42dp"
         android:layout_height="43dp"
         android:background="@drawable/bg_dialog_infor_user"
@@ -65,7 +65,7 @@
         android:layout_marginEnd="71dp"
         android:text="Thông tin tài khoản"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/btnClose_DialogInforUser"
+        app:layout_constraintEnd_toStartOf="@+id/btnClose_DialogThemGaTau"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -87,5 +87,5 @@
         android:text="Name"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnClose_DialogInforUser" />
+        app:layout_constraintTop_toBottomOf="@+id/btnClose_DialogThemGaTau" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,7 +7,15 @@ import java.util.List;
 public class User implements Serializable {
     private String userUID, name, dateOfBirth, email;
     private int userRole;
-    private List<Ticket> ticketList;
+    private List<VeTau> dsVe;
+
+    public List<VeTau> getDsVe() {
+        return dsVe;
+    }
+
+    public void setDsVe(List<VeTau> dsVe) {
+        this.dsVe = dsVe;
+    }
 
     public User() {
     }
@@ -61,11 +69,5 @@ public class User implements Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public List<Ticket> getTicketList() {
-        return ticketList;
-    }
 
-    public void setTicketList(List<Ticket> ticketList) {
-        this.ticketList = ticketList;
-    }
 }
