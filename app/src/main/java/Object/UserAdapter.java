@@ -72,7 +72,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         TextView txtName = dialog.findViewById(R.id.txtName_Dialog_Infor_User);
         TextView txtEmail = dialog.findViewById(R.id.txtEmail_Dialog_Infor_user);
         TextView txtNgaySinh = dialog.findViewById(R.id.txtNgaySinh_Dialog_Infor_user);
-        ImageButton btnClose = dialog.findViewById(R.id.btnClose_DialogInforUser);
+        ImageButton btnClose = dialog.findViewById(R.id.btnClose_DialogThemGaTau);
 
         txtName.setText(user.getName());
         txtNgaySinh.setText(user.getDateOfBirth());
@@ -105,8 +105,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtName = itemView.findViewById(R.id.txtName_ItemAccount);
-            txtEmail = itemView.findViewById(R.id.txtEmail_ItemAccount);
+            txtName = itemView.findViewById(R.id.txtTenGa_ItemGaTau);
+            txtEmail = itemView.findViewById(R.id.txtDiaChi_ItemGaTau);
             itemUser = itemView.findViewById(R.id.item_account);
         }
     }
