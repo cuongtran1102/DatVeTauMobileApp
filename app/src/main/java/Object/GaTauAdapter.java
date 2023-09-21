@@ -1,7 +1,10 @@
 package Object;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
@@ -58,11 +61,11 @@ public class GaTauAdapter extends RecyclerView.Adapter<GaTauAdapter.UserViewHold
         holder.itemGaTau.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showInformationUser(Gravity.CENTER, gaTau);
+                showInformationGaTau(Gravity.CENTER, gaTau);
             }
         });
     }
-    private void showInformationUser(int gravity, GaTau gaTau){
+    private void showInformationGaTau(int gravity, GaTau gaTau){
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_infor_gatau);
@@ -98,12 +101,14 @@ public class GaTauAdapter extends RecyclerView.Adapter<GaTauAdapter.UserViewHold
         btnSua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ProgressDialog progressDialog = new ProgressDialog(context);
                 String tenGa = etTenGa.getText().toString();
                 String diaChi = etDiaChi.getText().toString();
                 if(tenGa.trim().isEmpty() || diaChi.trim().isEmpty()){
                     Toast.makeText(context, "Hãy nhập đầy đủ thông tin ga tàu", Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    progressDialog.show();
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference databaseReference = database.getReference("GaTau").
                             child(gaTau.getMaGaTau());
@@ -113,6 +118,7 @@ public class GaTauAdapter extends RecyclerView.Adapter<GaTauAdapter.UserViewHold
                     databaseReference.updateChildren(map, new DatabaseReference.CompletionListener() {
                         @Override
                         public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                            progressDialog.dismiss();
                             if(error == null){
                                 Toast.makeText(context, "Sửa ga tàu thành công", Toast.LENGTH_SHORT).show();
                             }
@@ -127,22 +133,35 @@ public class GaTauAdapter extends RecyclerView.Adapter<GaTauAdapter.UserViewHold
         btnXoa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference databaseReference = database.getReference("GaTau").
-                        child(gaTau.getMaGaTau());
-                databaseReference.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Thông báo");
+                builder.setMessage("Xóa ga tàu này?");
+                builder.setPositiveButton("Cancel", null);
+                builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(context, "Xóa ga tàu thành công", Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
-                        }
-                        else {
-                            Toast.makeText(context, "Xóa ga tàu thất bại", Toast.LENGTH_SHORT).show();
-                        }
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        ProgressDialog progressDialog = new ProgressDialog(context);
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference databaseReference = database.getReference("GaTau").
+                                child(gaTau.getMaGaTau());
+                        progressDialog.show();
+                        databaseReference.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                progressDialog.dismiss();
+                                if(task.isSuccessful()){
+                                    Toast.makeText(context, "Xóa ga tàu thành công", Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
+                                }
+                                else {
+                                    Toast.makeText(context, "Xóa ga tàu thất bại", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
                     }
                 });
-
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
 
