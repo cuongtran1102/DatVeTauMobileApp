@@ -1,6 +1,7 @@
 package Fragment;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -43,6 +44,7 @@ public class FragmentThemGaTau extends Fragment {
     private GaTauAdapter gaTauAdapter;
     private List<GaTau> gaTauList;
     private Button btnShowDialogThemGaTau;
+    private ProgressDialog progressDialog;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -74,6 +76,8 @@ public class FragmentThemGaTau extends Fragment {
 
         btnShowDialogThemGaTau = rootView.findViewById(R.id.btnShowDialog_ThemGaTau);
 
+        progressDialog = new ProgressDialog(getContext());
+
     }
     private void themGaTau(String tenGa, String diaChi){
         DatabaseReference reference = database.getReference("GaTau");
@@ -82,9 +86,11 @@ public class FragmentThemGaTau extends Fragment {
         DatabaseReference newRef = reference.push();
         String maGaTau = newRef.getKey();
         gaTau.setMaGaTau(maGaTau);
+        progressDialog.show();
         newRef.setValue(gaTau).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
+                progressDialog.dismiss();
                 if (task.isSuccessful()){
                     Toast.makeText(getContext(), "Thêm ga tàu thành công", Toast.LENGTH_SHORT).show();
                 }
@@ -126,12 +132,13 @@ public class FragmentThemGaTau extends Fragment {
         btnThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String tenGa = etTenGa.getText().toString();
-                String diaChi = etDiaChi.getText().toString();
-                if (tenGa.trim().isEmpty() || diaChi.trim().isEmpty()){
+                String tenGa = etTenGa.getText().toString().trim();
+                String diaChi = etDiaChi.getText().toString().trim();
+                if (tenGa.isEmpty() || diaChi.isEmpty()){
                     Toast.makeText(getContext(), "Hãy nhập đủ thông tin cho ga tàu", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else if (checkGaTau(tenGa) == true) {
+                    Toast.makeText(getContext(), "Ga tàu đã tồn tại", Toast.LENGTH_SHORT).show();
+                } else {
                     themGaTau(tenGa, diaChi);
                     etTenGa.setText("");
                     etDiaChi.setText("");
@@ -161,6 +168,14 @@ public class FragmentThemGaTau extends Fragment {
 
             }
         });
+    }
+    private boolean checkGaTau(String tenGa){
+        for (GaTau gaTau : gaTauList){
+            if(gaTau.getTenGaTau().equals(tenGa)){
+                return true;
+            }
+        }
+        return false;
     }
 
 }
