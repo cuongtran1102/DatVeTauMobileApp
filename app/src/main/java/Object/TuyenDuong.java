@@ -1,6 +1,8 @@
 package Object;
 
-public class TuyenDuong {
+import java.io.Serializable;
+
+public class TuyenDuong implements Serializable {
     private String maTuyenDuong, tenTuyenDuong, gaDi, gaDen, gioKhoiHanh, thoiGianDiChuyen;
     private int slGhe;
     private float giaVeGiuongNam, giaVeGheNgoi;

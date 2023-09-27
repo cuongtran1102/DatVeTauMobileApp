@@ -82,8 +82,8 @@ public class TuyenDuongAdapter extends RecyclerView.Adapter<TuyenDuongAdapter.Us
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtGaDi = itemView.findViewById(R.id.txtGaDi_ItemTD);
-            txtGaDen = itemView.findViewById(R.id.txtGaDen_ItemTD);
+            txtGaDi = itemView.findViewById(R.id.txtGaDi_ItemCT);
+            txtGaDen = itemView.findViewById(R.id.txtGaDen_ItemCT);
             itemTuyenDuong = itemView.findViewById(R.id.item_tuyenduong);
         }
     }
@@ -120,7 +120,7 @@ public class TuyenDuongAdapter extends RecyclerView.Adapter<TuyenDuongAdapter.Us
         etGioXuatPhat.setText(tuyenDuong.getGioKhoiHanh());
         etTGDiChuyen.setText(tuyenDuong.getThoiGianDiChuyen());
 
-        ImageButton btnClose = dialog.findViewById(R.id.btnClose_DialogInforTD);
+        ImageButton btnClose = dialog.findViewById(R.id.btnClose_DialogInforCT);
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

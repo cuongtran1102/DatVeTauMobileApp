@@ -44,12 +44,12 @@ public class ShowDatePicker {
         datePickerDialog.show();
     }
 
-    public void showDatePickerDialogForFuture() {
+    public void showDatePickerDialogForFuture(int dayOfFuture) {
         // Lấy ngày hiện tại
         Calendar currentDate = Calendar.getInstance();
 
         // Tính toán ngày tối thiểu cho DatePickerDialog (ngày hiện tại + 2 ngày)
-        currentDate.add(Calendar.DAY_OF_MONTH, 2);
+        currentDate.add(Calendar.DAY_OF_MONTH, dayOfFuture);
 
         int year = currentDate.get(Calendar.YEAR);
         int month = currentDate.get(Calendar.MONTH);

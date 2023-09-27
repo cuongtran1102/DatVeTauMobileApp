@@ -147,7 +147,11 @@ public class FragmentThemTuyenDuong extends Fragment {
                 } else if (giaVeGheNgoiFloat <= 0) {
                     etGiaVeGheNgoi.setError("Giá vé phải có giá trị lớn hơn 0");
                     etGiaVeGheNgoi.requestFocus();
-                } else {
+                }
+                else if (gaDi.trim().equals(gaDen.trim())){
+                    atGaDen.setError("Ga đến không thể trùng với ga đi");
+                    atGaDen.requestFocus();
+                }else {
                     if(checkTuyenDuong(tenTuyenDuong, gioXuatPhat) == true){
                         builder.setMessage("Đã tồn tại tuyến đường này trên CSDL");
                         alertDialog = builder.create();
