@@ -15,6 +15,9 @@
         android:theme="@style/Theme.DatVeTauMobileApp"
         tools:targetApi="31">
         <activity
+            android:name=".DatVeTauActivity"
+            android:exported="false" />
+        <activity
             android:name=".ChuyenTauDetailActivity"
             android:exported="false" />
         <activity

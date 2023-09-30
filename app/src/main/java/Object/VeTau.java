@@ -1,22 +1,29 @@
 package Object;
 
 public class VeTau {
-    private String maVeTau, ngayDatVe, gioDatVe, loaiGhe;
-    private int soGhe;
+    private String maVeTau, ngayDatVe, gioDatVe, loaiGhe, userID;
+    private String soGhe;
     private float giaVe;
-    private User user;
     private ChuyenTau chuyenTau;
+
+    public String getSoGhe() {
+        return soGhe;
+    }
+
+    public void setSoGhe(String soGhe) {
+        this.soGhe = soGhe;
+    }
 
     public VeTau() {
     }
 
-    public VeTau(String ngayDatVe, String gioDatVe, String loaiGhe, int soGhe, float giaVe, User user, ChuyenTau chuyenTau) {
+    public VeTau(String ngayDatVe, String gioDatVe, String loaiGhe, String soGhe, float giaVe, String userID, ChuyenTau chuyenTau) {
         this.ngayDatVe = ngayDatVe;
         this.gioDatVe = gioDatVe;
         this.loaiGhe = loaiGhe;
         this.soGhe = soGhe;
         this.giaVe = giaVe;
-        this.user = user;
+        this.userID = userID;
         this.chuyenTau = chuyenTau;
     }
 
@@ -52,13 +59,6 @@ public class VeTau {
         this.loaiGhe = loaiGhe;
     }
 
-    public int getSoGhe() {
-        return soGhe;
-    }
-
-    public void setSoGhe(int soGhe) {
-        this.soGhe = soGhe;
-    }
 
     public float getGiaVe() {
         return giaVe;
@@ -68,13 +68,7 @@ public class VeTau {
         this.giaVe = giaVe;
     }
 
-    public User getUser() {
-        return user;
-    }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public ChuyenTau getChuyenTau() {
         return chuyenTau;
@@ -82,5 +76,13 @@ public class VeTau {
 
     public void setChuyenTau(ChuyenTau chuyenTau) {
         this.chuyenTau = chuyenTau;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }

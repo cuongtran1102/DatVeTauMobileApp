@@ -5,10 +5,8 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +29,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.tvc.datvetaumobileapp.LapLichChuyenTauActivity;
 import com.tvc.datvetaumobileapp.R;
 
 import java.util.Calendar;
@@ -89,8 +86,8 @@ public class ChuyenTauAdapter extends RecyclerView.Adapter<ChuyenTauAdapter.User
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtGaDi = itemView.findViewById(R.id.txtGaDi_ItemCT);
-            txtGaDen = itemView.findViewById(R.id.txtGaDen_ItemCT);
+            txtGaDi = itemView.findViewById(R.id.txtGaDi_ItemTD);
+            txtGaDen = itemView.findViewById(R.id.txtGaDen_ItemTD);
             txtNgayKhoiHanh = itemView.findViewById(R.id.txtNgayKhoiHanh_ItemCT);
             txtGioXuatPhat = itemView.findViewById(R.id.txtGioXuatPhat_ItemCT);
             txtSLGhe = itemView.findViewById(R.id.txtSLGhe_ItemCT);

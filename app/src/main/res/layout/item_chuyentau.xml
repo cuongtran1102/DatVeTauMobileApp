@@ -54,10 +54,10 @@
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/circleImageView_ItemCT" />
+            app:layout_constraintStart_toEndOf="@+id/circleImageView_ItemTD" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/circleImageView_ItemCT"
+            android:id="@+id/circleImageView_ItemTD"
             android:layout_width="85dp"
             android:layout_height="85dp"
             android:layout_marginStart="1dp"
@@ -67,17 +67,17 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView_ItemCT"
+            android:id="@+id/imageView_ItemTD"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginStart="2dp"
             android:layout_marginTop="1dp"
-            app:layout_constraintStart_toEndOf="@+id/txtGaDi_ItemCT"
+            app:layout_constraintStart_toEndOf="@+id/txtGaDi_ItemTD"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_arrow_right" />
 
         <TextView
-            android:id="@+id/txtGaDi_ItemCT"
+            android:id="@+id/txtGaDi_ItemTD"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
@@ -87,11 +87,11 @@
             android:textColor="#1347B7"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/circleImageView_ItemCT"
+            app:layout_constraintStart_toEndOf="@+id/circleImageView_ItemTD"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/txtGaDen_ItemCT"
+            android:id="@+id/txtGaDen_ItemTD"
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="1dp"
@@ -101,7 +101,7 @@
             android:textColor="#1347B7"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/imageView_ItemCT"
+            app:layout_constraintStart_toEndOf="@+id/imageView_ItemTD"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

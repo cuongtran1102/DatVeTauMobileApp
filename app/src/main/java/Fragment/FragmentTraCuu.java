@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.tvc.datvetaumobileapp.ChuyenTauDetailActivity;
 import com.tvc.datvetaumobileapp.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -153,6 +154,9 @@ public class FragmentTraCuu extends Fragment {
                     alertDialog.show();
                 } else {
                     Intent intent = new Intent(getContext(), ChuyenTauDetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("dsChuyenTau", (Serializable) dsKQTraCuu);
+                    intent.putExtras(bundle);
                     startActivity(intent);
                 }
             }
