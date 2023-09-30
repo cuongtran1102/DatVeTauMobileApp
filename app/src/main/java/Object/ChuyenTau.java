@@ -1,8 +1,9 @@
 package Object;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ChuyenTau {
+public class ChuyenTau implements Serializable {
     private String maChuyenTau, ngayDi;
     private TuyenDuong tuyenDuong;
     private List<VeTau> dsVe;

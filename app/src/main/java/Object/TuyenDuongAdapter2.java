@@ -15,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.tvc.datvetaumobileapp.LapLichChuyenTauActivity;
 import com.tvc.datvetaumobileapp.R;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class TuyenDuongAdapter2 extends RecyclerView.Adapter<TuyenDuongAdapter2.UserViewHolder>{
     private Context context;
@@ -40,6 +42,11 @@ public class TuyenDuongAdapter2 extends RecyclerView.Adapter<TuyenDuongAdapter2.
         }
         holder.txtGaDi.setText(tuyenDuong.getGaDi());
         holder.txtGaDen.setText(tuyenDuong.getGaDen());
+        holder.txtGioKhoiHanh.setText(tuyenDuong.getGioKhoiHanh());
+        holder.txtSLGhe.setText("SLGhế: " + tuyenDuong.getSlGhe());
+        NumberFormat format = NumberFormat.getCurrencyInstance(new
+                Locale("vi", "VN"));
+        holder.txtGiaVe.setText("Giá vé: " + format.format(tuyenDuong.getGiaVeGheNgoi()));
         holder.itemTuyenDuong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,14 +67,17 @@ public class TuyenDuongAdapter2 extends RecyclerView.Adapter<TuyenDuongAdapter2.
     }
 
     public class UserViewHolder extends RecyclerView.ViewHolder{
-        private TextView txtGaDi, txtGaDen;
+        private TextView txtGaDi, txtGaDen, txtGioKhoiHanh, txtSLGhe, txtGiaVe;
         private CardView itemTuyenDuong;
 
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
-            txtGaDi = itemView.findViewById(R.id.txtGaDi_ItemCT);
-            txtGaDen = itemView.findViewById(R.id.txtGaDen_ItemCT);
+            txtGaDi = itemView.findViewById(R.id.txtGaDi_ItemTD);
+            txtGaDen = itemView.findViewById(R.id.txtGaDen_ItemTD);
+            txtGioKhoiHanh = itemView.findViewById(R.id.txtGioKhoiHanh_ItemTD);
+            txtSLGhe = itemView.findViewById(R.id.txtSLGhe_ItemTD);
+            txtGiaVe = itemView.findViewById(R.id.txtGiaVe_ItemTD);
             itemTuyenDuong = itemView.findViewById(R.id.item_tuyenduong);
         }
     }
