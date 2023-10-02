@@ -126,7 +126,7 @@ public class ChuyenTauAdapter extends RecyclerView.Adapter<ChuyenTauAdapter.User
             }
         });
 
-        ImageButton btnClose = dialog.findViewById(R.id.btnClose_DialogInforCT);
+        ImageButton btnClose = dialog.findViewById(R.id.btnClose_DialogLichSuDatVe);
         Button btnSua = dialog.findViewById(R.id.btnSua_DialogInforCT);
         Button btnXoa = dialog.findViewById(R.id.btnXoa_DialogInforCT);
 
