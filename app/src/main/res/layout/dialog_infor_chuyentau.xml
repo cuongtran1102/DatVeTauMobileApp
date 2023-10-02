@@ -79,7 +79,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/btnClose_DialogInforCT"
+        android:id="@+id/btnClose_DialogLichSuDatVe"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/bg_dialog_infor_user"
@@ -101,7 +101,7 @@
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnClose_DialogInforCT" />
+        app:layout_constraintTop_toBottomOf="@+id/btnClose_DialogLichSuDatVe" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

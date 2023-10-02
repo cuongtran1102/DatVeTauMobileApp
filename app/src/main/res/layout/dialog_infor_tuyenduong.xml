@@ -151,7 +151,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/btnClose_DialogInforCT"
+        android:id="@+id/btnClose_DialogLichSuDatVe"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/bg_dialog_infor_user"
