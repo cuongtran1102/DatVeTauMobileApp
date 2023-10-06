@@ -7,6 +7,7 @@ import java.util.List;
 public class User implements Serializable {
     private String userUID, name, dateOfBirth, email;
     private int userRole;
+    private float accountBalance;
     private List<VeTau> dsVe;
 
     public List<VeTau> getDsVe() {
@@ -27,6 +28,14 @@ public class User implements Serializable {
         this.dateOfBirth = dateOfBirth;
         this.email = email;
 
+    }
+
+    public float getAccountBalance() {
+        return accountBalance;
+    }
+
+    public void setAccountBalance(float accountBalance) {
+        this.accountBalance = accountBalance;
     }
 
     public String getEmail() {

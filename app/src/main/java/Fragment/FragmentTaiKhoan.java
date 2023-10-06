@@ -24,7 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.tvc.datvetaumobileapp.EditPasswordActivity;
 import com.tvc.datvetaumobileapp.EditProfileUserActivity;
 import com.tvc.datvetaumobileapp.LoginActivity;
-import com.tvc.datvetaumobileapp.MainActivity;
 import com.tvc.datvetaumobileapp.R;
 
 import Object.User;

@@ -130,7 +130,7 @@ public class TuyenDuongAdapter extends RecyclerView.Adapter<TuyenDuongAdapter.Us
         etGioXuatPhat.setText(tuyenDuong.getGioKhoiHanh());
         etTGDiChuyen.setText(tuyenDuong.getThoiGianDiChuyen());
 
-        ImageButton btnClose = dialog.findViewById(R.id.btnClose_DialogLichSuDatVe);
+        ImageButton btnClose = dialog.findViewById(R.id.btnClose_DialogThanhToan);
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

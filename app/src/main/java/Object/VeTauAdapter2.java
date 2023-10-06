@@ -48,7 +48,6 @@ import com.tvc.datvetaumobileapp.R;
 
 import java.io.IOException;
 import java.text.NumberFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
@@ -179,7 +178,7 @@ public class VeTauAdapter2 extends RecyclerView.Adapter<VeTauAdapter2.UserViewHo
         });
 
 
-        ImageButton btnClose = dialog.findViewById(R.id.btnClose_DialogLichSuDatVe);
+        ImageButton btnClose = dialog.findViewById(R.id.btnClose_DialogThanhToan);
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
