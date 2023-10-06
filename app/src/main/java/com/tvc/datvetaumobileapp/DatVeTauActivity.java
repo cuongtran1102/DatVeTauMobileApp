@@ -4,11 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -17,6 +24,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -51,6 +60,7 @@ public class DatVeTauActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private List<String> dsGheDaDat;
     private int selectedSeatCount = 0;
+    float tongTien = 0;
     private List<TextView> dsGheDaChon;
 
     private AlertDialog.Builder builder;
@@ -78,36 +88,82 @@ public class DatVeTauActivity extends AppCompatActivity {
                 if (selectedSeatCount == 0) {
                     Toast.makeText(context, "Hãy chọn ghế muốn đặt!", Toast.LENGTH_SHORT).show();
                 } else {
-                    progressDialog.show();
-                    if (dsGheDaChon.size() == 0) {
-                        progressDialog.dismiss();
-                        builder.setMessage("Đặt vé thất bại!");
-                        alertDialog = builder.create();
-                        alertDialog.show();
-                    } else {
-                        for (TextView item : dsGheDaChon) {
-                            LocalDate currentDate = LocalDate.now();
-                            DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                            String formattedDate = currentDate.format(formatterDate);
+                    final Dialog dialog = new Dialog(context);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setContentView(R.layout.dialog_thanhtoan);
 
-                            LocalTime currentTime = LocalTime.now();
-                            DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm");
-                            String formattedTime = currentTime.format(formatterTime);
-
-                            datVeTau(formattedDate, formattedTime,
-                                    "Ghe Ngoi", item.getText().toString(), mUser.getUid(), chuyenTau,
-                                    chuyenTau.getTuyenDuong().getGiaVeGheNgoi());
-                        }
-                        selectedSeatCount = 0;
-                        dsGheDaChon.clear();
-                        txtSLGheDat.setText("0");
-                        txtTongTien.setText("0 đ");
-                        progressDialog.dismiss();
-                        builder.setMessage("Đặt vé thành công");
-                        alertDialog = builder.create();
-                        alertDialog.show();
+                    Window window = dialog.getWindow();
+                    if (window == null) {
+                        return;
                     }
+                    window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,
+                            WindowManager.LayoutParams.WRAP_CONTENT);
+                    window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+                    WindowManager.LayoutParams layoutParams = window.getAttributes();
+                    layoutParams.gravity = Gravity.CENTER;
+                    window.setAttributes(layoutParams);
+                    dialog.setCancelable(true);
+
+                    EditText etTongTien = dialog.findViewById(R.id.etTienThanhToan_DialogThanhToan);
+                    NumberFormat format = NumberFormat.getCurrencyInstance(new
+                            Locale("vi", "VN"));
+                    String formattedTongTien = format.format(tongTien);
+                    etTongTien.setText(formattedTongTien);
+
+                    EditText etPassword = dialog.findViewById(R.id.etPassword_DialogThanhToan);
+                    Button btnThanhToan = dialog.findViewById(R.id.btnThanhToan_DialogThanhToan);
+                    btnThanhToan.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String passWord = etPassword.getText().toString().trim();
+                            if (passWord.isEmpty()) {
+                                etPassword.setError("Hãy nhập mật khẩu");
+                                etPassword.requestFocus();
+                            } else {
+                                progressDialog.show();
+                                AuthCredential authCredential = EmailAuthProvider.getCredential(mUser.getEmail(), passWord);
+                                mUser.reauthenticate(authCredential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        progressDialog.dismiss();
+                                        if (task.isSuccessful()) {
+                                            for (TextView item : dsGheDaChon) {
+                                                LocalDate currentDate = LocalDate.now();
+                                                DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                                                String formattedDate = currentDate.format(formatterDate);
+
+                                                LocalTime currentTime = LocalTime.now();
+                                                DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HH:mm");
+                                                String formattedTime = currentTime.format(formatterTime);
+
+                                                datVeTau(formattedDate, formattedTime,
+                                                        "Ghe Ngoi", item.getText().toString(), mUser.getUid(), chuyenTau,
+                                                        chuyenTau.getTuyenDuong().getGiaVeGheNgoi());
+                                            }
+                                            dialog.dismiss();
+                                            selectedSeatCount = 0;
+                                            tongTien = 0;
+                                            dsGheDaChon.clear();
+                                            txtSLGheDat.setText("0");
+                                            txtTongTien.setText("0 đ");
+                                            Toast.makeText(context, "Đặt vé thành công", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(context, task.getException().getMessage().toString(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                    ImageButton btnClose = dialog.findViewById(R.id.btnClose_DialogThanhToan);
+                    btnClose.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.show();
                 }
             }
         });
@@ -252,7 +308,7 @@ public class DatVeTauActivity extends AppCompatActivity {
                         // Cập nhật trạng thái
                         isSelected[0] = !currentlySelected;
                         txtSLGheDat.setText(String.valueOf(selectedSeatCount));
-                        float tongTien = chuyenTau.getTuyenDuong().getGiaVeGheNgoi() * selectedSeatCount;
+                        tongTien = chuyenTau.getTuyenDuong().getGiaVeGheNgoi() * selectedSeatCount;
                         NumberFormat format = NumberFormat.getCurrencyInstance(new
                                 Locale("vi", "VN"));
                         String formattedTongTien = format.format(tongTien);

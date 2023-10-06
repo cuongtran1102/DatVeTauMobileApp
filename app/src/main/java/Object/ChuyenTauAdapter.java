@@ -111,7 +111,7 @@ public class ChuyenTauAdapter extends RecyclerView.Adapter<ChuyenTauAdapter.User
         layoutParams.gravity = gravity;
         window.setAttributes(layoutParams);
         dialog.setCancelable(true);
-        EditText etTenChuyenTau = dialog.findViewById(R.id.etTenCT_DialogInforCT);
+        EditText etTenChuyenTau = dialog.findViewById(R.id.etTienThanhToan_DialogThanhToan);
         EditText etGioXuatPhat = dialog.findViewById(R.id.etGioXuatPhat_DialogInforCT);
         EditText etNgayKhoiHanh = dialog.findViewById(R.id.etNgayKhoiHanh_DialogInforCT);
 
@@ -126,7 +126,7 @@ public class ChuyenTauAdapter extends RecyclerView.Adapter<ChuyenTauAdapter.User
             }
         });
 
-        ImageButton btnClose = dialog.findViewById(R.id.btnClose_DialogLichSuDatVe);
+        ImageButton btnClose = dialog.findViewById(R.id.btnClose_DialogThanhToan);
         Button btnSua = dialog.findViewById(R.id.btnSua_DialogInforCT);
         Button btnXoa = dialog.findViewById(R.id.btnXoa_DialogInforCT);
 

@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:layout_marginTop="30dp"
-        android:background="#C6AEAB"
+        android:background="@drawable/bg_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -141,7 +141,7 @@
         android:layout_height="75dp"
         android:layout_marginTop="1dp"
         android:background="@drawable/bg_menu_user"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_EditPassword">
 
         <ImageView

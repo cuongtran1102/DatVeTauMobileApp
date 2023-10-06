@@ -160,7 +160,7 @@ public class VeTauAdapter extends RecyclerView.Adapter<VeTauAdapter.UserViewHold
         });
 
 
-        ImageButton btnClose = dialog.findViewById(R.id.btnClose_DialogLichSuDatVe);
+        ImageButton btnClose = dialog.findViewById(R.id.btnClose_DialogThanhToan);
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
