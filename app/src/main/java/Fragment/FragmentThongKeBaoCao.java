@@ -31,6 +31,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.tvc.datvetaumobileapp.R;
 
@@ -40,6 +41,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -58,8 +60,6 @@ public class FragmentThongKeBaoCao extends Fragment {
     private List<String> dsChuyenTau;
     private List<String> dsThangThongKe;
     private List<String> dsNamThongKe;
-    private List<VeTau> dsVeTau;
-    private List<VeTau> veTaus;
     private AlertDialog.Builder builder;
     private AlertDialog alertDialog;
     private ProgressDialog progressDialog;
@@ -110,35 +110,65 @@ public class FragmentThongKeBaoCao extends Fragment {
             public void onClick(View view) {
                 String tenChuyenTau = atTenChuyenTau.getText().toString().trim();
                 if (tenChuyenTau.isEmpty()) {
+                    clearInformation();
                     Toast.makeText(getContext(), "Hãy nhập tên chuyến tàu cần thống kê", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (!dsChuyenTau.contains(tenChuyenTau)) {
-                        builder.setMessage("Không tồn tại chuyến tàu");
-                        alertDialog = builder.create();
-                        alertDialog.show();
-                    } else {
-                        layDSVeTau(monthThongKe, yearThongKe);
-                        layDSVeTau(monthThongKe, yearThongKe, tenChuyenTau);
-                        float tongSLVe = 0;
-                        float slVeDat = 0;
-                        if (!dsVeTau.isEmpty()) {
-                            slVeDat = (float) dsVeTau.size();
-                            etSLVeDat.setText(String.valueOf(dsVeTau.size()));
-                            NumberFormat format = NumberFormat.getCurrencyInstance(new
-                                    Locale("vi", "VN"));
-                            float tongDoanhThu = dsVeTau.size() * dsVeTau.get(0).getGiaVe();
-                            String formattedDoanhThu = format.format(tongDoanhThu);
-                            etTongDoanhThu.setText(formattedDoanhThu);
-                            if (!veTaus.isEmpty()){
-                                tongSLVe = (float) veTaus.size();
-                                etTyLe.setText(String.valueOf((slVeDat / tongSLVe) * 100) + "%");
+                    progressDialog.show();
+                    DatabaseReference databaseReference = database.getReference("VeTau");
+                    databaseReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            List<VeTau> veTauList = new ArrayList<>();
+                            List<VeTau> dsVeTauThongKe = new ArrayList<>();
+                            progressDialog.dismiss();
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                VeTau veTau = dataSnapshot.getValue(VeTau.class);
+                                if (veTau != null) {
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                                    LocalDate ngayDatVe = LocalDate.parse(veTau.getNgayDatVe(), formatter);
+                                    if (String.valueOf(ngayDatVe.getMonthValue()).equals(monthThongKe) && String.valueOf(ngayDatVe.getYear()).equals(yearThongKe)) {
+                                        veTauList.add(veTau);
+                                    }
+                                }
                             }
-                        } else {
-                            etSLVeDat.setText("0");
-                            etTongDoanhThu.setText("0 đ");
-                            etTyLe.setText("0 %");
+                            if (veTauList.isEmpty()) {
+                                clearInformation();
+                                builder.setMessage("Tháng này không có lượt đặt vé nào");
+                                alertDialog = builder.create();
+                                alertDialog.show();
+                            } else {
+                                for (VeTau veTau : veTauList) {
+                                    if (veTau.getChuyenTau().getTuyenDuong().getTenTuyenDuong().equals(tenChuyenTau)) {
+                                        dsVeTauThongKe.add(veTau);
+                                    }
+                                }
+                                if (dsVeTauThongKe.isEmpty()) {
+                                    clearInformation();
+                                    builder.setMessage("Không tìm thấy chuyến tàu cần thống kê");
+                                    alertDialog = builder.create();
+                                    alertDialog.show();
+                                } else {
+                                    etSLVeDat.setText(String.valueOf(dsVeTauThongKe.size()));
+                                    double tyLeVe = (double) dsVeTauThongKe.size() / veTauList.size();
+                                    double tyLeVeTrenThang = tyLeVe * 100;
+                                    etTyLe.setText(String.valueOf(tyLeVeTrenThang) + "%");
+                                    float tongDoanhThu = 0;
+                                    for (VeTau veTau : dsVeTauThongKe) {
+                                        tongDoanhThu += veTau.getGiaVe();
+                                    }
+                                    NumberFormat format = NumberFormat.getCurrencyInstance(new
+                                            Locale("vi", "VN"));
+                                    String formattedDoanhThu = format.format(tongDoanhThu);
+                                    etTongDoanhThu.setText(formattedDoanhThu);
+                                }
+                            }
                         }
-                    }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
             }
         });
@@ -148,8 +178,6 @@ public class FragmentThongKeBaoCao extends Fragment {
 
     private void init() {
         database = FirebaseDatabase.getInstance();
-        dsVeTau = new ArrayList<>();
-        veTaus = new ArrayList<>();
 
         dsChuyenTau = new ArrayList<>();
         layDSChuyenTau();
@@ -178,6 +206,12 @@ public class FragmentThongKeBaoCao extends Fragment {
         progressDialog = new ProgressDialog(getContext());
     }
 
+    private void clearInformation() {
+        etTongDoanhThu.setText("");
+        etTyLe.setText("");
+        etSLVeDat.setText("");
+    }
+
     private void layDSChuyenTau() {
         DatabaseReference reference = database.getReference("TuyenDuong");
         reference.addValueEventListener(new ValueEventListener() {
@@ -186,70 +220,17 @@ public class FragmentThongKeBaoCao extends Fragment {
                 if (dsChuyenTau != null) {
                     dsChuyenTau.clear();
                 }
+                HashSet<String> uniqueTenTau = new HashSet<>(); // Sử dụng HashSet để loại bỏ trùng lặp
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     TuyenDuong tuyenDuong = dataSnapshot.getValue(TuyenDuong.class);
                     if (tuyenDuong != null) {
-                        dsChuyenTau.add(tuyenDuong.getTenTuyenDuong());
+                        uniqueTenTau.add(tuyenDuong.getTenTuyenDuong());
                     }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                // Bây giờ danh sách tên chuyến tàu không trùng lặp trong uniqueTenTau
+                dsChuyenTau.addAll(uniqueTenTau);
 
-            }
-        });
-    }
-
-    private void layDSVeTau(String month, String year, String tenChuyenTau) {
-        DatabaseReference reference = database.getReference("VeTau");
-        progressDialog.show();
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                progressDialog.dismiss();
-                if (dsVeTau != null) {
-                    dsVeTau.clear();
-                }
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    VeTau veTau = dataSnapshot.getValue(VeTau.class);
-                    if (veTau != null) {
-                        if (veTau.getChuyenTau().getTuyenDuong().getTenTuyenDuong().equals(tenChuyenTau)) {
-                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                            LocalDate ngayDatVe = LocalDate.parse(veTau.getNgayDatVe(), formatter);
-                            if (String.valueOf(ngayDatVe.getMonthValue()).equals(month) && String.valueOf(ngayDatVe.getYear()).equals(year)) {
-                                dsVeTau.add(veTau);
-                            }
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void layDSVeTau(String month, String year) {
-        DatabaseReference reference = database.getReference("VeTau");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (veTaus != null) {
-                    veTaus.clear();
-                }
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    VeTau veTau = dataSnapshot.getValue(VeTau.class);
-                    if (veTau != null) {
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                        LocalDate ngayDatVe = LocalDate.parse(veTau.getNgayDatVe(), formatter);
-                        if (String.valueOf(ngayDatVe.getMonthValue()).equals(month) && String.valueOf(ngayDatVe.getYear()).equals(year)) {
-                            veTaus.add(veTau);
-                        }
-                    }
-                }
             }
 
             @Override
@@ -260,7 +241,7 @@ public class FragmentThongKeBaoCao extends Fragment {
     }
 
     private void layDSNamThongKe() {
-        int numberOfYears = 10;
+        int numberOfYears = 5;
         List<Integer> yearList = new ArrayList<>();
 
         // Lấy năm hiện tại

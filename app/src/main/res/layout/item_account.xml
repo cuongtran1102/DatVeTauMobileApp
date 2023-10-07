@@ -18,20 +18,23 @@
             android:id="@+id/txtDiaChi_ItemGaTau"
             android:layout_width="275dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:text="TextView"
+            android:textAlignment="center"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtTenGa_ItemGaTau" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/txtTenGa_ItemGaTau"
             android:layout_width="275dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="14dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
             android:text="TextView"
-            android:textSize="20sp"
+            android:textAlignment="center"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
