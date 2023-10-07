@@ -22,7 +22,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="#D1A28F"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
-            app:title="                   Admin">
+            app:title="                   ADMIN">
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>

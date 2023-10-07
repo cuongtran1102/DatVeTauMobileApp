@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.tvc.datvetaumobileapp.R;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import Object.*;
@@ -139,10 +140,12 @@ public class FragmentThemChuyenTau extends Fragment {
                 if(dsTenTuyenDuong != null){
                     dsTenTuyenDuong.clear();
                 }
+                HashSet<String> uniqueTenChuyenTau = new HashSet<>();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     TuyenDuong tuyenDuong = dataSnapshot.getValue(TuyenDuong.class);
-                    dsTenTuyenDuong.add(tuyenDuong.getTenTuyenDuong());
+                    uniqueTenChuyenTau.add(tuyenDuong.getTenTuyenDuong());
                 }
+                dsTenTuyenDuong.addAll(uniqueTenChuyenTau);
             }
 
             @Override
